@@ -7,6 +7,12 @@
 #
 
 ##########################
+# Constatnts
+##########################
+
+slack_max_size=63 # Use a bit below to account for possible rounding errors in compression
+
+##########################
 # Pre-check
 ##########################
 
@@ -96,4 +102,14 @@ if [ $image_width -le $image_height ]; then
     magick convert -resize x128 "$image_path" "$output_path"
 else
     magick convert -resize 128x "$image_path" "$output_path"
+fi
+
+photo_size=$(( `du -k "$output_path" | cut -f1` ))
+
+echo "Current Photo Size: $photo_size"
+
+if [ $photo_size -gt $slack_max_size ]; then
+    echo "Compressing to fit Slack size requirements"
+    quality=`echo "100 * ($slack_max_size/$photo_size)" | bc -l`
+    magick convert -quality $quality "$output_path" "$output_path"
 fi
