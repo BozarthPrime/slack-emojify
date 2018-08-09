@@ -106,7 +106,7 @@ fi
 
 photo_size=$(( `du -k "$output_path" | cut -f1` ))
 
-echo "Current Photo Size: $photo_size"
+echo "Current Photo Size: $photo_size kb"
 
 if [ $photo_size -gt $slack_max_size ]; then
     echo "Compressing to fit Slack size requirements"
