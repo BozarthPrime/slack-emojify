@@ -52,7 +52,7 @@ elif [ $# -eq 2 ]; then
         output_path="output.${image_path##*.}"
     else
         image_path="$1"
-        OUTPUT_PATH="$2"
+        output_path="$2"
     fi
 elif [ $# -eq 3 ]; then
     if [ "$1" == "-c" ] || [ "$1" == "--crop" ]; then
